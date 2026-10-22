@@ -7,10 +7,20 @@ description: Connect to and operate authorized university AIStation A800 GPU job
 
 把已获授权的运算可靠地转到学院 GPU，区分“平台任务、SSH 隧道、服务进程、实际计算和独立验收”。先读当前项目 AGENTS.md、README、冻结计划、状态及完成收据；已有授权继续有效，活跃任务不重复启动。
 
+## 全任务统一运行要求
+
+用户2026-10-22明确要求：使用A800时先打好并验证环境，把环境/镜像、启动入口和项目/数据/输出持久目录挂载配置到AIStation正式任务中运行。优先复用已验证环境；开发实例用于构建、调试和小规模验证，正式长计算由平台任务的启动脚本/监督器承载。SSH用于连接、传输和运维，计算生命周期不能依赖交互终端或聊天。提交后实查任务ID、镜像/环境、挂载、启动命令及真实GPU检查点；环境或服务就绪不等于实验完成。具体步骤见[部署要点](references/deployment.md)。
+
 ## 先选入口
+
+- 用户明确允许单卡共享时，可复用同一既有正式平台任务承载多个受监督子作业；不自动申请第二张卡或强制创建独立任务。分别记录“平台任务身份”和“项目子进程身份”，不能把SSH可达、模型常驻、过去跑过CUDA或旧JSON的running当作当前真实计算。
+- 接入信息先查[本机配置与运行登记](references/local-context.md)及私有运行登记，再查已有运维脚本；不要尚未查全就让用户重复提供网址、账号、端口或密钥。任务ID、镜像或平台入口未核实时如实标未核，不由容器名猜测为已提交的新任务。
+- 当前进程与容器更换后，核PID＋创建时间或Linux启动tick、预期脚本和新检查点增长；当前科学进度不能只复述旧状态文件。资源利用和吞吐修订见[吞吐与资源利用](references/performance.md)。
 
 - 已有任务/续跑：读 [运行与恢复](references/operations.md)，先实查身份、完整检查点和收据，正常进度保持安静。
 - 新部署、保存镜像或正式任务：读 [部署要点](references/deployment.md)。只操作授权的任务和项目，不把临时开发实例当持续计算任务。
+- 用户提供的学院操作录屏、Xftp传输、开发环境/保存镜像/任务管理界面：读[材料核对后的操作流程](references/provided-platform-workflow.md)；具体接入信息查私有登记，教学账号不覆盖当前配置。
+- 所有A800计算及性能排查：读 [吞吐与资源利用](references/performance.md)，实测批量/并发、GPU计算和显存、端到端吞吐，避免模型已加载但没有有效计算；不把显存占用冒称加速。
 - LLM 标注或受限数据：再读 [复现与数据边界](references/reproducibility.md)，不要用模型一致性替代任务语义准确率。
 
 连接参数仅从机器私有 profile 读取：优先环境变量 `AISTATION_A800_PROFILE`，其次本机 `E:/CodexData/private/aistation-a800/current.local.json`。文件缺失时用 [profile 示例](references/profile.example.json) 建立自己的配置；公有 skill 不保存真实地址、账户、密钥、口令或项目样本。认证已配置时直接使用，不让用户重复提供。截图里出现的口令不复制进代码或聊天。
