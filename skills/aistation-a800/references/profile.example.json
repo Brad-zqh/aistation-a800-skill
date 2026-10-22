@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "scratch_root": "E:/CodexWork",
+  "local_python": "E:/project-env/python.exe",
+  "ssh": {
+    "executable": "C:/Windows/System32/OpenSSH/ssh.exe",
+    "host": "gpu.example.edu",
+    "port": 22222,
+    "user": "researcher",
+    "identity_file": "E:/private/task_ed25519",
+    "known_hosts": "E:/private/task_known_hosts"
+  },
+  "remote": {
+    "project_root": "/shared/my-gpu-project",
+    "python": "/shared/my-gpu-project/env/bin/python",
+    "state_files": ["state/task_supervisor.json", "state/model_run/job_service_state.json"],
+    "model_paths": ["models/model.gguf"]
+  },
+  "private_checkpoint_roots": ["E:/private/approved-expiring-results"]
+}

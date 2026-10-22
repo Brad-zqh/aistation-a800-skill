@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.local.json
+.env
+.env.*
+*.pem
+*.key
+*ed25519*
+*known_hosts*
+*.log
+artifacts/
+scratch/
+.pytest_cache/
